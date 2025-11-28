@@ -2,6 +2,18 @@
 
 A complete integration of Coda Formula Language (CFL) support into Google Antigravity, providing syntax highlighting and AI-powered formula generation for Coda Makers.
 
+> [!IMPORTANT]
+> **Early Stage Project - Light Testing**
+> 
+> This project has undergone very light testing and should be considered experimental. While the core functionality (syntax highlighting and AI-powered formula generation) has been validated, it has not been extensively tested in production environments. Use with caution and please report any issues you encounter.
+> 
+> - ✅ Basic syntax highlighting validated
+> - ✅ AI agent CFL generation tested (8 validation tasks)
+> - ⚠️ Limited real-world usage
+> - ⚠️ May contain undiscovered edge cases
+> 
+> **Recommendation:** Test thoroughly in your own environment before relying on this for critical work.
+
 ## Features
 
 - 🎨 **Syntax Highlighting** - JavaScript-based syntax highlighting for `.coda` files
