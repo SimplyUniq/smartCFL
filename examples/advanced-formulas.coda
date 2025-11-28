@@ -1,0 +1,225 @@
+// ============================================
+// ADVANCED CODA FORMULA EXAMPLES
+// ============================================
+// This file demonstrates advanced CFL patterns including
+// chaining, named formulas, complex filters, and optimization
+
+// --------------------------------------------
+// 1. ADVANCED CHAINING
+// --------------------------------------------
+// Multi-step chaining for readability
+Projects
+  .Filter(Status = "Active")
+  .Filter(Owner = User())
+  .Filter(Due Date < Today().AddDays(7))
+  .Sort(false, Due Date)
+  .Name
+
+// Chain with aggregations
+Tasks
+  .Filter(Status = "Done")
+  .Filter(Completion Date >= Today().AddDays(-30))
+  .Count()
+
+// Complex transformation chain
+Produce
+  .Filter(Fruit or Vegetable = "Fruit")
+  .Filter(Price < 10)
+  .Sort(true, Price)
+  .FormulaMap(Concatenate(CurrentValue.Name, " ($", CurrentValue.Price.ToText(), ")"))
+
+// --------------------------------------------
+// 2. NAMED FORMULAS (REUSABLE)
+// --------------------------------------------
+// Define once, use everywhere
+// Named: TotalFruits
+Produce.Filter(Fruit or Vegetable = "Fruit").Count()
+
+// Named: TotalVegetables  
+Produce.Filter(Fruit or Vegetable = "Vegetable").Count()
+
+// Named: MyOpenTasks
+Tasks.Filter(Assignee = User() AND Status != "Done")
+
+// Named: HighPriorityCount
+Tasks.Filter(Priority = "High" OR Priority = "Critical").Count()
+
+// Use named formulas in other formulas:
+// If(TotalFruits > TotalVegetables, "More fruits", "More veggies")
+// MyOpenTasks.Count()
+
+// --------------------------------------------
+// 3. COMPLEX FILTERING PATTERNS
+// --------------------------------------------
+// Multiple AND/OR conditions with grouping
+Tasks.Filter(
+  (Priority = "High" OR Priority = "Critical") AND
+  (Status = "In Progress" OR Status = "Not Started") AND
+  (Assignee = User() OR Team.Contains(User()))
+)
+
+// Date range filtering
+Events.Filter(
+  Event Date >= Today() AND
+  Event Date <= Today().AddDays(30)
+)
+
+// Nested table filtering
+Projects.Filter(
+  Tasks.Filter(Status != "Done").Count() > 0
+)
+
+// Filter with calculations
+Products.Filter(
+  (Quantity * Price) > 1000
+)
+
+// Filter using related table data
+Orders.Filter(
+  Customer.Country = "USA" AND
+  Order Date >= Date(2025, 1, 1)
+)
+
+// --------------------------------------------
+// 4. ADVANCED LOOKUPS
+// --------------------------------------------
+// Lookup with default value
+Categories
+  .Filter(ID = thisRow.Category ID)
+  .First()
+  .Name
+  .IfBlank("Uncategorized")
+
+// Multi-level lookup
+thisRow.Order.Customer.Company.Industry
+
+// Lookup with aggregation
+thisRow.Project.Tasks.Filter(Status = "Done").Count()
+
+// Reverse lookup (find all related records)
+Tasks.Filter(Project = thisRow)
+
+// --------------------------------------------
+// 5. ADVANCED AGGREGATIONS
+// --------------------------------------------
+// Conditional sum
+Tasks.Filter(Status = "Done").Sum(Hours Spent)
+
+// Weighted average
+Products.Sum(Price * Quantity) / Products.Sum(Quantity)
+
+// Grouped calculations (using FormulaMap)
+Categories.FormulaMap(
+  Concatenate(
+    CurrentValue.Name,
+    ": ",
+    Products.Filter(Category = CurrentValue).Count().ToText(),
+    " items"
+  )
+)
+
+// Cumulative calculations
+thisRow.Previous Rows.Sum(Amount) + thisRow.Amount
+
+// --------------------------------------------
+// 6. PERFORMANCE OPTIMIZATION PATTERNS
+// --------------------------------------------
+// Cache filtered results in named formula instead of repeating
+// BAD: Repeating the same filter
+// Tasks.Filter(Status = "Done").Count() + Tasks.Filter(Status = "Done").Sum(Hours)
+
+// GOOD: Use named formula "CompletedTasks"
+// CompletedTasks.Count() + CompletedTasks.Sum(Hours)
+
+// Use thisTable for current table references
+thisTable.Filter(Status = "Active")
+
+// Avoid volatile functions in table columns
+// Instead of: Now() in every row
+// Use: Modified(thisRow) or a button to update timestamp
+
+// Minimize nested filters
+// BAD: Projects.Filter(...).Filter(...).Filter(...)
+// GOOD: Projects.Filter(Condition1 AND Condition2 AND Condition3)
+
+// --------------------------------------------
+// 7. ADVANCED TEXT MANIPULATION
+// --------------------------------------------
+// Regular expressions (if supported)
+thisRow.Email.RegexMatch("@(.+)$")
+
+// Advanced concatenation with formatting
+Concatenate(
+  "**", thisRow.Name, "**\n",
+  "Status: ", thisRow.Status, "\n",
+  "Due: ", thisRow.Due Date.ToText(), "\n",
+  "Progress: ", (thisRow.Completed / thisRow.Total * 100).Round(0).ToText(), "%"
+)
+
+// Join list items
+thisRow.Tags.Join(", ")
+
+// Split and process
+thisRow.CSV Data.Split(",").FormulaMap(CurrentValue.Trim())
+
+// --------------------------------------------
+// 8. ADVANCED DATE CALCULATIONS
+// --------------------------------------------
+// Business days between dates
+NetWorkingDays(thisRow.Start Date, thisRow.End Date)
+
+// Add business days
+WorkingDays(Today(), 5)
+
+// Calculate age/duration
+(Today() - thisRow.Birth Date).Days() / 365.25
+
+// Week number
+WeekNum(Today())
+
+// Quarter calculation
+Ceiling(Month(Today()) / 3)
+
+// --------------------------------------------
+// 9. DYNAMIC BUTTON FORMULAS
+// --------------------------------------------
+// Button to add row with calculated values
+AddRow(
+  Tasks,
+  Name, Concatenate("Task for ", User().Name),
+  Assignee, User(),
+  Created Date, Today(),
+  Status, "Not Started"
+)
+
+// Button to modify multiple rows
+ModifyRows(
+  Tasks.Filter(Status = "In Progress" AND Assignee = User()),
+  Status, "Done",
+  Completion Date, Today()
+)
+
+// Button with conditional logic
+If(
+  thisRow.Status = "Not Started",
+  ModifyRows(thisRow, Status, "In Progress", Start Date, Today()),
+  ModifyRows(thisRow, Status, "Done", Completion Date, Today())
+)
+
+// --------------------------------------------
+// 10. ADVANCED LIST OPERATIONS
+// --------------------------------------------
+// Unique values
+Products.Category.Unique()
+
+// Flatten nested lists
+Projects.FormulaMap(CurrentValue.Tasks).Flatten()
+
+// List intersection
+List("A", "B", "C").Intersect(List("B", "C", "D"))
+
+// List difference
+List("A", "B", "C").Difference(List("B"))
+
+// Sort and limit
+Products.Sort(false, Price).Nth(1, 10)

@@ -1,0 +1,93 @@
+// ============================================
+// BASIC CODA FORMULA EXAMPLES
+// ============================================
+// This file demonstrates fundamental CFL operations
+// File association: *.coda -> javascript for syntax highlighting
+
+// --------------------------------------------
+// 1. FILTER FUNCTION
+// --------------------------------------------
+// Filter a table to show only fruits
+Produce.Filter(Fruit or Vegetable = "Fruit")
+
+// Filter with chaining and extract names
+Produce.Filter(Fruit or Vegetable = "Fruit").Name
+
+// Filter with multiple conditions
+Tasks.Filter(Status = "In Progress" AND Priority = "High")
+
+// --------------------------------------------
+// 2. COUNT FUNCTION
+// --------------------------------------------
+// Count total rows in a table
+Produce.Count()
+
+// Count filtered results
+Produce.Filter(Fruit or Vegetable = "Vegetable").Count()
+
+// Count with complex filter
+Tasks.Filter(Status = "Done" AND Assignee = User()).Count()
+
+// --------------------------------------------
+// 3. BASIC DATA ACCESS
+// --------------------------------------------
+// Access a column from a table
+Produce.Name
+
+// Access multiple columns (returns list)
+Produce.Price
+
+// Get first item from a list
+Produce.First().Name
+
+// Get last item
+Produce.Last().Price
+
+// --------------------------------------------
+// 4. SIMPLE CALCULATIONS
+// --------------------------------------------
+// Sum values in a column
+Produce.Sum(Price)
+
+// Average
+Tasks.Average(Hours Spent)
+
+// Min and Max
+Produce.Min(Price)
+Produce.Max(Price)
+
+// --------------------------------------------
+// 5. TEXT OPERATIONS
+// --------------------------------------------
+// Concatenate strings
+Concatenate("Hello, ", "World!")
+
+// Convert to text
+thisRow.Price.ToText()
+
+// Format with multiple values
+Concatenate("Item: ", thisRow.Name, " - Price: $", thisRow.Price.ToText())
+
+// --------------------------------------------
+// 6. DATE FUNCTIONS
+// --------------------------------------------
+// Get today's date
+Today()
+
+// Get current timestamp
+Now()
+
+// Calculate days between dates
+NetWorkingDays(thisRow.Start Date, thisRow.End Date)
+
+// --------------------------------------------
+// 7. BASIC LIST OPERATIONS
+// --------------------------------------------
+// Create a list
+List("Apple", "Banana", "Cherry")
+
+// Create a list of numbers
+List(1, 2, 3, 4, 5)
+
+// Get list length
+List("A", "B", "C").Count()

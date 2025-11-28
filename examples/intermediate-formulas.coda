@@ -1,0 +1,147 @@
+// ============================================
+// INTERMEDIATE CODA FORMULA EXAMPLES
+// ============================================
+// This file demonstrates intermediate CFL patterns
+// including thisRow, Contains, User(), and conditional logic
+
+// --------------------------------------------
+// 1. THISROW CONTEXT
+// --------------------------------------------
+// Reference current row's column
+thisRow.Name
+
+// Access related table data through thisRow
+thisRow.Project.Due Date
+
+// Calculate based on current row
+thisRow.Quantity * thisRow.Price
+
+// Lookup from another table using thisRow
+Categories.Filter(Name = thisRow.Category).Description.First()
+
+// Chain multiple thisRow references
+thisRow.Client.Email
+
+// --------------------------------------------
+// 2. CONTAINS FUNCTION
+// --------------------------------------------
+// Check if a list contains a value
+List("Dog", "Cat", "Giraffe").Contains("Dog")  // true
+
+// Use with Filter for multi-select columns
+Tasks.Filter(Tags.Contains("Urgent"))
+
+// Check if text contains substring
+thisRow.Description.Contains("important")
+
+// Filter table where a column contains current user
+Projects.Filter(Team Members.Contains(User()))
+
+// Combine Contains with other conditions
+Produce.Filter(Name.Contains("Apple") AND Price < 5)
+
+// --------------------------------------------
+// 3. USER() FUNCTION - PERSONALIZATION
+// --------------------------------------------
+// Get current user's name
+User().Name
+
+// Get current user's email
+User().Email
+
+// Create personalized greeting
+Concatenate("Welcome, ", User().Name, "!")
+
+// Filter for current user's tasks
+Tasks.Filter(Assignee = User())
+
+// Filter for tasks assigned to current user that are not done
+Tasks.Filter(Assignee = User() AND Status != "Done")
+
+// Count my open tasks
+Tasks.Filter(Assignee = User() AND Status = "In Progress").Count()
+
+// --------------------------------------------
+// 4. IF() CONDITIONAL LOGIC
+// --------------------------------------------
+// Simple if/else
+If(thisRow.Price > 100, "Expensive", "Affordable")
+
+// Nested conditions
+If(thisRow.Status = "Done", "✅", If(thisRow.Status = "In Progress", "⏳", "⭕"))
+
+// If with calculations
+If(thisRow.Quantity > 0, thisRow.Quantity * thisRow.Price, 0)
+
+// Compare counts
+If(
+  Produce.Filter(Fruit or Vegetable = "Vegetable").Count() > Produce.Filter(Fruit or Vegetable = "Fruit").Count(),
+  "More veggies! 🥦",
+  "More fruits! 🍎"
+)
+
+// Check for blank values
+If(IsBlank(thisRow.Notes), "No notes", thisRow.Notes)
+
+// --------------------------------------------
+// 5. SWITCHIF() - MULTIPLE CONDITIONS
+// --------------------------------------------
+// Multiple condition handling
+SwitchIf(
+  thisRow.Priority = "Critical", "🔴 Critical",
+  thisRow.Priority = "High", "🟠 High",
+  thisRow.Priority = "Medium", "🟡 Medium",
+  "🟢 Low"  // Default fallback
+)
+
+// Time-based logic
+SwitchIf(
+  Today() > Date(2030, 1, 1), "Future!",
+  Year(Today()) = 2025, "Present!",
+  "Past!"
+)
+
+// Status-based routing
+SwitchIf(
+  thisRow.Status = "Done", Concatenate("✅ Completed on ", thisRow.Completion Date.ToText()),
+  thisRow.Status = "In Progress", Concatenate("⏳ Started ", thisRow.Start Date.ToText()),
+  thisRow.Status = "Blocked", "🚫 Blocked - needs attention",
+  "⭕ Not started"
+)
+
+// --------------------------------------------
+// 6. COMBINING PATTERNS
+// --------------------------------------------
+// Filter + thisRow + User
+Projects.Filter(Owner = User()).Filter(Status = "Active")
+
+// Contains + If
+If(thisRow.Tags.Contains("Urgent"), "⚠️ " + thisRow.Name, thisRow.Name)
+
+// User + Count + If
+If(
+  Tasks.Filter(Assignee = User() AND Status != "Done").Count() > 10,
+  "You have too many tasks!",
+  "Looking good!"
+)
+
+// Complex filter with multiple conditions
+Tasks.Filter(
+  (Priority = "High" OR Priority = "Critical") AND
+  Status != "Done" AND
+  Assignee = User()
+).Count()
+
+// --------------------------------------------
+// 7. FORMULAMAP - TRANSFORM LISTS
+// --------------------------------------------
+// Transform each item in a list
+List(1, 2, 3, 4, 5).FormulaMap(CurrentValue * 2)
+
+// Transform table data
+Produce.Filter(Fruit or Vegetable = "Fruit").FormulaMap(
+  Concatenate(CurrentValue.Name, " - $", CurrentValue.Price.ToText())
+)
+
+// Use with thisRow
+thisRow.Items.FormulaMap(CurrentValue.Name)
