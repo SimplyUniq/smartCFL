@@ -1,6 +1,6 @@
 # smartCFL - Coda Formula Language for Antigravity
 
-A complete integration of Coda Formula Language (CFL) support into Google Antigravity, providing syntax highlighting and AI-powered formula generation for Coda.io developers.
+A complete integration of Coda Formula Language (CFL) support into Google Antigravity, providing syntax highlighting and AI-powered formula generation for Coda Makers.
 
 ## Features
 

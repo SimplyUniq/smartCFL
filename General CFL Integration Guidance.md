@@ -82,7 +82,7 @@ Antigravity agents are excellent at reading files in your workspace to gain cont
 Create a file named `AGENT_INSTRUCTIONS.md` in your root. Antigravity agents often prioritize top-level instruction files.
 
 ```markdown
-# Coda Formula Developer Identity
+# Coda Formula Maker Identity
 You are an expert Coda.io Formula Engineer. 
 
 ## Rules
